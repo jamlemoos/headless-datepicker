@@ -64,14 +64,9 @@ export function compareDates(a: ISODateString, b: ISODateString): -1 | 0 | 1 {
   return 0
 }
 
-export function formatLongDate(iso: ISODateString, locale: string): string {
+export function formatLongDate(iso: ISODateString, formatter: Intl.DateTimeFormat): string {
   const p = parseISO(iso)
   if (!p) return iso
   const d = new Date(p.year, p.month - 1, p.day)
-  return new Intl.DateTimeFormat(locale, {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(d)
+  return formatter.format(d)
 }

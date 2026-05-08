@@ -7,8 +7,8 @@ const CELLS_IN_GRID = DAYS_IN_WEEK * WEEKS_IN_GRID
 
 type CellContext = Pick<
   CalendarGridOptions,
-  'today' | 'selectedDate' | 'focusedDate' | 'minDate' | 'maxDate' | 'locale'
->
+  'today' | 'selectedDate' | 'focusedDate' | 'minDate' | 'maxDate'
+> & { formatter: Intl.DateTimeFormat }
 
 export function buildCalendarGrid(options: CalendarGridOptions): CalendarDay[][] {
   const {
@@ -32,7 +32,13 @@ export function buildCalendarGrid(options: CalendarGridOptions): CalendarDay[][]
   const nextMonth = viewMonth === 12 ? 1 : viewMonth + 1
   const nextYear = viewMonth === 12 ? viewYear + 1 : viewYear
 
-  const context: CellContext = { today, selectedDate, focusedDate, minDate, maxDate, locale }
+  const formatter = new Intl.DateTimeFormat(locale, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+  const context: CellContext = { today, selectedDate, focusedDate, minDate, maxDate, formatter }
   const cells: CalendarDay[] = []
 
   for (let i = firstDow - 1; i >= 0; i--) {
@@ -74,7 +80,7 @@ function makeCell(
   monthOffset: -1 | 0 | 1,
   context: CellContext,
 ): CalendarDay {
-  const { today, selectedDate, focusedDate, minDate, maxDate, locale } = context
+  const { today, selectedDate, focusedDate, minDate, maxDate, formatter } = context
 
   return {
     date,
@@ -84,6 +90,6 @@ function makeCell(
     isSelected: date === selectedDate,
     isFocused: date === focusedDate,
     isDisabled: isDateOutsideRange(date, minDate, maxDate),
-    ariaLabel: formatLongDate(date, locale),
+    ariaLabel: formatLongDate(date, formatter),
   }
 }

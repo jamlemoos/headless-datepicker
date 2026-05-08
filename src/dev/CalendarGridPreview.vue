@@ -78,10 +78,9 @@ function next() {
             'cgp__cell--disabled': cell.isDisabled,
           }"
           :aria-label="cell.ariaLabel"
-          :aria-selected="cell.isSelected"
+          :aria-pressed="cell.isSelected"
           :aria-disabled="cell.isDisabled"
           :disabled="cell.isDisabled"
-          role="gridcell"
           type="button"
         >
           {{ cell.dayOfMonth }}
