@@ -32,6 +32,17 @@ export interface DatePickerState {
   locale: string
 }
 
+export interface CalendarGridOptions {
+  viewYear: number
+  viewMonth: number
+  today: ISODateString
+  selectedDate: ISODateString | null
+  focusedDate: ISODateString | null
+  minDate: ISODateString | null
+  maxDate: ISODateString | null
+  locale: string
+}
+
 export interface DatePickerInstance {
   getState(): Readonly<DatePickerState>
   getCalendarGrid(): CalendarDay[][]

@@ -3,6 +3,7 @@ export type {
   DatePickerOptions,
   DatePickerState,
   CalendarDay,
+  CalendarGridOptions,
   DatePickerInstance,
 } from './types.js'
 
@@ -16,4 +17,7 @@ export {
   addDays,
   addMonths,
   compareDates,
+  formatLongDate,
 } from './dateAdapter.js'
+
+export { buildCalendarGrid } from './calendar.js'

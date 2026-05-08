@@ -7,13 +7,17 @@ export function todayISO(): ISODateString {
 
 export function parseISO(iso: string): { year: number; month: number; day: number } | null {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return null
-  const [y, m, d] = iso.split('-').map(Number) as [number, number, number]
-  if (!isValidDate(y, m, d)) return null
-  return { year: y, month: m, day: d }
+  const [year, month, day] = iso.split('-').map(Number) as [number, number, number]
+  if (!isValidDate(year, month, day)) return null
+  return { year, month, day }
 }
 
 export function toISO(year: number, month: number, day: number): ISODateString {
-  return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+  return [
+    String(year).padStart(4, '0'),
+    String(month).padStart(2, '0'),
+    String(day).padStart(2, '0'),
+  ].join('-')
 }
 
 export function isValidDate(year: number, month: number, day: number): boolean {
@@ -42,8 +46,14 @@ export function addMonths(iso: ISODateString, delta: number): ISODateString {
   if (!p) return iso
   let year = p.year
   let month = p.month + delta
-  while (month > 12) { month -= 12; year++ }
-  while (month < 1) { month += 12; year-- }
+  while (month > 12) {
+    month -= 12
+    year++
+  }
+  while (month < 1) {
+    month += 12
+    year--
+  }
   const day = Math.min(p.day, daysInMonth(year, month))
   return toISO(year, month, day)
 }
@@ -52,4 +62,16 @@ export function compareDates(a: ISODateString, b: ISODateString): -1 | 0 | 1 {
   if (a < b) return -1
   if (a > b) return 1
   return 0
+}
+
+export function formatLongDate(iso: ISODateString, locale: string): string {
+  const p = parseISO(iso)
+  if (!p) return iso
+  const d = new Date(p.year, p.month - 1, p.day)
+  return new Intl.DateTimeFormat(locale, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(d)
 }
