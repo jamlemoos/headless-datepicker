@@ -16,6 +16,7 @@ describe('dateAdapter', () => {
     it('should format dates using zero-padded ISO format', () => {
       expect(todayISO()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(toISO(2026, 5, 7)).toBe('2026-05-07');
+      expect(toISO(999, 5, 7)).toBe('0999-05-07');
     });
 
     it('should parse a valid ISO date', () => {

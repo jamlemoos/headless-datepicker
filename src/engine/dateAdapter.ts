@@ -13,7 +13,7 @@ export function parseISO(iso: string): { year: number; month: number; day: numbe
 }
 
 export function toISO(year: number, month: number, day: number): ISODateString {
-  return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+  return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 }
 
 export function isValidDate(year: number, month: number, day: number): boolean {
