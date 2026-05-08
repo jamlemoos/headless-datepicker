@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import CalendarGridPreview from './dev/CalendarGridPreview.vue'
 </script>
 
 <template>
   <main>
     <h1>Headless Date Picker</h1>
-    <p>Date picker component coming soon.</p>
+    <CalendarGridPreview />
   </main>
 </template>
 
@@ -30,6 +31,6 @@ main {
 
 h1 {
   font-size: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 </style>
